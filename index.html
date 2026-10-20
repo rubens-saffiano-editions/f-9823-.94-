@@ -302,8 +302,7 @@
       
       var qualite = document.getElementById("qualite").value.trim() || "Aucune précision.";
 
-      // Création du message parfaitement formaté pour WhatsApp
-      // Les astérisques (*) créent du gras dans WhatsApp
+      // Création du message avec une signature luxueuse
       var message = 
         "*FICHE ATELIER — RUBENS SAFFIANO*\n\n" +
         "*01. INFORMATIONS PERSONNELLES*\n" +
@@ -317,10 +316,12 @@
         "• Épaules : " + epaule + "\n\n" +
         "*03. SÉLECTION & FINITIONS*\n" +
         qualite + "\n\n" +
-        "----------------------------------\n" +
-        "_Message généré depuis le formulaire client._";
+        "----------------------------------\n\n" +
+        "*Merci de votre confiance.*\n" +
+        "Votre demande a bien été transmise à notre atelier. Chaque création étant façonnée avec le plus grand soin, un conseiller de la Maison vous recontactera très prochainement pour finaliser les détails.\n\n" +
+        "_La Maison Rubens Saffiano_";
 
-      // Numéro WhatsApp de l'atelier (votre numéro)
+      // Numéro WhatsApp de l'atelier
       var numWA = "33695772805"; 
       
       // Ouverture de WhatsApp avec le message pré-rempli
