@@ -24,11 +24,14 @@
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
   
   /* --- En-tête épuré & Vagues de luxe animées --- */
   header.entete {
-    height: 56px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,7 +39,7 @@
     top: 0;
     background-color: #F7F5F0;
     z-index: 1000;
-    padding: 0 20px;
+    padding: 0 24px;
     overflow: hidden;
   }
   
@@ -47,11 +50,11 @@
     opacity: 0;
     animation: fadeIn 1.5s ease 0.5s forwards;
   }
-  .vague-gauche { margin-right: 15px; }
-  .vague-droite { background: linear-gradient(90deg, #d4cec4, transparent); margin-left: 15px; }
+  .vague-gauche { margin-right: 18px; }
+  .vague-droite { background: linear-gradient(90deg, #d4cec4, transparent); margin-left: 18px; }
 
   header.entete .marque {
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: .2em;
     text-transform: uppercase;
@@ -90,32 +93,41 @@
   .d-3 { animation-delay: 0.3s; }
   .d-4 { animation-delay: 0.4s; }
 
-  /* --- Conteneur aéré pour occuper parfaitement l'écran sans vide --- */
-  .conteneur { max-width: 600px; margin: 0 auto; padding: 22px 20px 32px; }
+  /* --- Conteneur aéré qui s'étale parfaitement sur toute la hauteur --- */
+  .conteneur {
+    flex: 1;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px 22px 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
   
   .titre-section {
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 600;
     letter-spacing: .16em;
     text-transform: uppercase;
-    margin: 22px 0 10px 0;
+    margin: 26px 0 12px 0;
     border-bottom: 1px solid #e3ded5;
-    padding-bottom: 6px;
+    padding-bottom: 7px;
     color: #222;
   }
   .titre-section:first-child { margin-top: 0; }
   
-  .champ { margin-bottom: 12px; position: relative; }
+  .champ { margin-bottom: 15px; position: relative; }
   .champ input, .champ textarea {
     width: 100%;
     font-family: var(--f);
-    font-size: 14px;
+    font-size: 14.5px;
     font-weight: 300;
     color: #111;
     border: 0;
     border-bottom: 1px solid #d4cec4;
     background: transparent;
-    padding: 11px 0;
+    padding: 13px 0;
     outline: none;
     border-radius: 0;
     appearance: none;
@@ -125,20 +137,20 @@
     border-bottom: 1px solid #111;
   }
   .champ input::placeholder, .champ textarea::placeholder { color: #888; }
-  .champ textarea { resize: vertical; min-height: 60px; }
-  .grille { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .champ textarea { resize: vertical; min-height: 70px; }
+  .grille { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   
   /* --- Bouton d'action --- */
   .bouton {
     display: block;
     width: 100%;
-    margin-top: 24px;
+    margin-top: 35px;
     background: #F7F5F0;
     color: #111;
     border: 1px solid #111;
-    padding: 15px;
+    padding: 17px;
     font-family: var(--f);
-    font-size: 10.5px;
+    font-size: 11px;
     font-weight: 500;
     letter-spacing: .25em;
     text-transform: uppercase;
@@ -177,45 +189,46 @@
   </header>
 
   <main class="conteneur" id="zone-formulaire">
-    
-    <!-- Section 1 -->
-    <div class="anim d-1">
-      <div class="titre-section">01. Informations Personnelles</div>
-      <div class="champ">
-        <input type="text" id="nom" placeholder="Nom et Prénom" autocomplete="name">
+    <div>
+      <!-- Section 1 -->
+      <div class="anim d-1">
+        <div class="titre-section">01. Informations Personnelles</div>
+        <div class="champ">
+          <input type="text" id="nom" placeholder="Nom et Prénom" autocomplete="name">
+        </div>
+        <div class="champ">
+          <input type="tel" id="tel" placeholder="Numéro de téléphone" autocomplete="tel">
+        </div>
+        <div class="champ">
+          <input type="text" id="adresse" placeholder="Adresse complète de livraison" autocomplete="street-address">
+        </div>
       </div>
-      <div class="champ">
-        <input type="tel" id="tel" placeholder="Numéro de téléphone" autocomplete="tel">
-      </div>
-      <div class="champ">
-        <input type="text" id="adresse" placeholder="Adresse complète de livraison" autocomplete="street-address">
-      </div>
-    </div>
 
-    <!-- Section 2 -->
-    <div class="anim d-2">
-      <div class="titre-section">02. Caractéristiques Morphologiques</div>
-      <div class="grille">
-        <div class="champ">
-          <input type="number" id="taille" placeholder="Taille (cm)">
-        </div>
-        <div class="champ">
-          <input type="number" id="poids" placeholder="Poids (kg)">
-        </div>
-        <div class="champ">
-          <input type="number" id="poitrine" placeholder="Tour de poitrine (cm)">
-        </div>
-        <div class="champ">
-          <input type="number" id="epaule" placeholder="Tour d'épaule (cm)">
+      <!-- Section 2 -->
+      <div class="anim d-2">
+        <div class="titre-section">02. Caractéristiques Morphologiques</div>
+        <div class="grille">
+          <div class="champ">
+            <input type="number" id="taille" placeholder="Taille (cm)">
+          </div>
+          <div class="champ">
+            <input type="number" id="poids" placeholder="Poids (kg)">
+          </div>
+          <div class="champ">
+            <input type="number" id="poitrine" placeholder="Tour de poitrine (cm)">
+          </div>
+          <div class="champ">
+            <input type="number" id="epaule" placeholder="Tour d'épaule (cm)">
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Section 3 -->
-    <div class="anim d-3">
-      <div class="titre-section">03. Sélection de Qualité</div>
-      <div class="champ">
-        <textarea id="qualite" placeholder="Précisez votre sélection..."></textarea>
+      <!-- Section 3 -->
+      <div class="anim d-3">
+        <div class="titre-section">03. Sélection de Qualité</div>
+        <div class="champ">
+          <textarea id="qualite" placeholder="Précisez votre sélection..."></textarea>
+        </div>
       </div>
     </div>
 
