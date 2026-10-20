@@ -122,18 +122,20 @@
   }
   .titre-section:first-child { margin-top: 8px; }
   
-  /* --- Champs --- */
-  .champ { 
+  /* --- Champs et Zone de texte (Unifiés) --- */
+  .champ, .champ-zone { 
     margin-bottom: 16px; 
     position: relative; 
   }
   
-  .champ input, .champ textarea {
+  .champ input, 
+  .champ textarea,
+  .champ-zone textarea {
     width: 100%;
-    font-family: var(--f);
-    font-size: 15px; 
-    font-weight: 300;
-    color: var(--texte);
+    font-family: var(--f) !important; /* Force la police */
+    font-size: 15px !important;      /* Force la taille */
+    font-weight: 300 !important;     /* Force la graisse fine */
+    color: var(--texte) !important;
     border: 0;
     border-bottom: 1px solid var(--ligne);
     background: transparent;
@@ -144,16 +146,22 @@
     transition: border-color 0.3s ease;
   }
   
-  .champ input:focus, .champ textarea:focus {
+  .champ input:focus, 
+  .champ textarea:focus,
+  .champ-zone textarea:focus {
     border-bottom: 1px solid var(--texte);
   }
   
-  .champ input::placeholder, .champ textarea::placeholder { 
+  .champ input::placeholder, 
+  .champ textarea::placeholder,
+  .champ-zone textarea::placeholder { 
     color: #888; 
-    font-size: 15px;
+    font-family: var(--f) !important;
+    font-size: 15px !important;
+    font-weight: 300 !important;
   }
 
-  /* --- ZONE DE TEXTE : Correction et intégration parfaite --- */
+  /* --- ZONE DE TEXTE : Intégration parfaite --- */
   .section-qualite {
     flex: 1; 
     display: flex;
@@ -165,18 +173,19 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    margin-bottom: 0;
   }
 
   .champ-zone textarea { 
     flex: 1; 
-    /* On force la suppression de TOUS les styles natifs du navigateur mobile */
+    /* Suppression des styles natifs du navigateur mobile */
     border: none !important;
-    border-bottom: 1px solid var(--ligne) !important; /* Ligne fine uniquement en bas */
-    background: transparent !important; /* Pas de fond blanc */
+    border-bottom: 1px solid var(--ligne) !important; 
+    background: transparent !important; 
     box-shadow: none !important;
     -webkit-appearance: none !important;
     appearance: none !important;
-    resize: none !important; /* Pas de poignée de redimensionnement */
+    resize: none !important; 
     border-radius: 0 !important;
   }
 
