@@ -27,24 +27,25 @@
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* On s'assure que le body ne prend pas plus de place que nécessaire */
+    /* Utilisation de 100dvh pour s'adapter à la barre d'adresse mobile */
+    height: 100vh;
+    height: 100dvh; 
+    overflow: hidden; /* Empêche le body de scroller, on gère le scroll à l'intérieur si besoin */
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
   }
   
-  /* --- En-tête épuré & Vagues de luxe animées --- */
+  /* --- En-tête --- */
   header.entete {
     height: 52px;
+    flex: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: sticky;
-    top: 0;
     background-color: var(--fond);
     z-index: 1000;
     padding: 0 20px;
-    overflow: hidden;
+    position: relative;
   }
   
   .vague-gauche, .vague-droite {
@@ -97,44 +98,47 @@
   .d-3 { animation-delay: 0.3s; }
   .d-4 { animation-delay: 0.4s; }
 
-  /* --- Conteneur compact --- */
-  .conteneur {
+  /* --- Conteneur Flexbox pour occuper 100% de l'écran --- */
+  main.conteneur {
+    flex: 1; /* Prend tout l'espace restant */
+    display: flex;
+    flex-direction: column;
     max-width: 600px;
     margin: 0 auto;
     width: 100%;
-    padding: 16px 20px 24px; /* Réduction drastique des marges externes */
-    flex: 1;
+    padding: 16px 24px 24px;
+    overflow-y: auto; /* Scrolle seulement si l'écran est VRAIMENT minuscule */
   }
   
-  /* --- Titres de section plus proches --- */
+  /* --- Titres de section --- */
   .titre-section {
     font-size: 10px;
     font-weight: 600;
     letter-spacing: .18em;
     text-transform: uppercase;
-    margin: 24px 0 8px 0; /* Marges réduites (24px en haut, 8px en bas) */
+    margin: 20px 0 10px 0;
     border-bottom: 1px solid #e3ded5;
-    padding-bottom: 4px;
+    padding-bottom: 6px;
     color: var(--texte);
   }
-  .titre-section:first-child { margin-top: 0; }
+  .titre-section:first-child { margin-top: 8px; }
   
-  /* --- Champs très fins --- */
+  /* --- Champs agrandis --- */
   .champ { 
-    margin-bottom: 14px; /* Grand espace réduit à 14px entre chaque champ */
+    margin-bottom: 16px; 
     position: relative; 
   }
   
   .champ input, .champ textarea {
     width: 100%;
     font-family: var(--f);
-    font-size: 13.5px;
+    font-size: 15px; /* Taille confortable */
     font-weight: 300;
     color: var(--texte);
     border: 0;
     border-bottom: 1px solid var(--ligne);
     background: transparent;
-    padding: 10px 0 6px 0; /* Padding vertical réduit */
+    padding: 12px 0 8px 0;
     outline: none;
     border-radius: 0;
     appearance: none;
@@ -147,13 +151,27 @@
   
   .champ input::placeholder, .champ textarea::placeholder { 
     color: #888; 
-    font-size: 13.5px;
+    font-size: 15px;
   }
 
-  /* --- Retour à une zone de texte simple (sans case) --- */
-  .champ textarea { 
-    min-height: 54px; /* Juste assez pour 2 lignes */
-    resize: none; /* Empêche l'utilisateur de casser la mise en page */
+  /* --- Le secret : la zone de texte prend tout l'espace disponible --- */
+  .section-qualite {
+    flex: 1; /* Force cette section à s'étirer pour remplir le vide */
+    display: flex;
+    flex-direction: column;
+    min-height: 80px; /* Sécurité pour ne pas qu'elle disparaisse */
+  }
+  
+  .champ-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .champ-zone textarea { 
+    flex: 1; /* Le textarea s'étire dans sa section */
+    border-bottom: 1px solid var(--ligne); /* On garde la ligne du bas uniquement */
+    resize: none;
   }
 
   /* --- Grille --- */
@@ -161,20 +179,23 @@
     display: grid; 
     grid-template-columns: 1fr 1fr; 
     column-gap: 20px; 
-    row-gap: 0; 
   }
   
-  /* --- Bouton bien proportionné --- */
+  /* --- Bouton ancré en bas --- */
+  .bouton-wrapper {
+    margin-top: auto; /* Pousse le bouton tout en bas si le textarea a fini de s'étirer */
+    padding-top: 20px;
+  }
+
   .bouton {
     display: block;
     width: 100%;
-    margin-top: 28px; /* Marge réduite pour remonter le bouton */
     background: var(--texte);
     color: var(--fond);
     border: 1px solid var(--texte);
-    padding: 14px;
+    padding: 16px;
     font-family: var(--f);
-    font-size: 10.5px;
+    font-size: 11px;
     font-weight: 500;
     letter-spacing: .25em;
     text-transform: uppercase;
@@ -246,16 +267,16 @@
       </div>
     </div>
 
-    <!-- Section 3 -->
-    <div class="anim d-3">
+    <!-- Section 3 (S'étire pour occuper le vide) -->
+    <div class="anim d-3 section-qualite">
       <div class="titre-section">03. Sélection de Qualité</div>
-      <div class="champ">
-        <textarea id="qualite" placeholder="Précisez votre sélection..." rows="2"></textarea>
+      <div class="champ-zone">
+        <textarea id="qualite" placeholder="Précisez votre sélection, vos envies, vos finitions..."></textarea>
       </div>
     </div>
 
     <!-- Bouton -->
-    <div class="anim d-4">
+    <div class="anim d-4 bouton-wrapper">
       <button type="button" class="bouton" id="envoyer">Transmettre à l'atelier</button>
     </div>
 
