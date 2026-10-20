@@ -25,19 +25,43 @@
     -moz-osx-font-smoothing: grayscale;
   }
   
-  /* --- En-tête épuré & Animation Luxe --- */
+  /* --- En-tête épuré & Vagues de luxe animées --- */
   header.entete {
-    height: 52px;
+    height: 70px;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centrage absolu sans icônes */
-    background-color: #F9F8F6;
+    justify-content: center;
     position: sticky;
     top: 0;
+    background-color: #F9F8F6;
     z-index: 1000;
+    padding: 0 20px;
+    overflow: hidden;
   }
   
-  /* Ligne animée sous l'en-tête (remplace les bordures statiques) */
+  /* Vagues décoratives de luxe de part et d'autre du nom */
+  .vague-gauche, .vague-droite {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c5bfb6);
+    opacity: 0;
+    animation: fadeIn 1.5s ease 0.5s forwards;
+  }
+  .vague-gauche { background: linear-gradient(90deg, transparent, #c5bfb6); margin-right: 20px; }
+  .vague-droite { background: linear-gradient(90deg, #c5bfb6, transparent); margin-left: 20px; }
+
+  header.entete .marque {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #000;
+    opacity: 0;
+    animation: fadeIn 1.5s ease 0.3s forwards;
+    white-space: nowrap;
+  }
+
+  /* Ligne de séparation animée sous l'en-tête */
   header.entete::after {
     content: '';
     position: absolute;
@@ -50,88 +74,74 @@
     animation: expandLine 1.5s cubic-bezier(0.8, 0, 0.2, 1) forwards;
   }
 
-  header.entete .marque {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    color: #000;
-    opacity: 0;
-    animation: fadeIn 1.5s ease 0.3s forwards;
-  }
-
-  /* --- Animations d'apparition (Fade-up) --- */
-  @keyframes expandLine {
-    to { width: 100%; }
-  }
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
+  /* --- Animations --- */
+  @keyframes expandLine { to { width: 100%; } }
+  @keyframes fadeIn { to { opacity: 1; } }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(25px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   .anim {
     opacity: 0;
-    animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .d-1 { animation-delay: 0.2s; }
-  .d-2 { animation-delay: 0.3s; }
-  .d-3 { animation-delay: 0.4s; }
-  .d-4 { animation-delay: 0.5s; }
+  .d-2 { animation-delay: 0.35s; }
+  .d-3 { animation-delay: 0.5s; }
+  .d-4 { animation-delay: 0.65s; }
 
-  /* --- Formulaire & zones à imprimer --- */
-  .conteneur { max-width: 600px; margin: 0 auto; padding: 40px 24px 80px; }
+  /* --- Conteneur & Aération Luxueuse --- */
+  .conteneur { max-width: 650px; margin: 0 auto; padding: 60px 24px 100px; }
   
   .titre-section {
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 600;
-    letter-spacing: .15em;
+    letter-spacing: .18em;
     text-transform: uppercase;
-    margin: 40px 0 20px 0;
+    margin: 50px 0 25px 0;
     border-bottom: 1px solid #eae6e0;
-    padding-bottom: 10px;
+    padding-bottom: 12px;
+    color: #111;
   }
   .titre-section:first-child { margin-top: 0; }
   
-  .champ { margin-bottom: 16px; position: relative; }
+  .champ { margin-bottom: 24px; position: relative; }
   .champ input, .champ textarea {
     width: 100%;
     font-family: var(--f);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 300;
     color: #000;
     border: 0;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #d4cdc4;
     background: transparent;
-    padding: 12px 0;
+    padding: 16px 0;
     outline: none;
     border-radius: 0;
     appearance: none;
-    transition: border-color 0.4s ease, opacity 0.4s ease;
+    transition: border-color 0.4s ease;
   }
   .champ input:focus, .champ textarea:focus {
-    border-bottom: 1px solid #a8a39d;
+    border-bottom: 1px solid #000;
   }
-  .champ input::placeholder, .champ textarea::placeholder { color: #888; transition: opacity 0.3s; }
-  .champ input:focus::placeholder, .champ textarea:focus::placeholder { opacity: 0.3; }
-  .champ textarea { resize: vertical; min-height: 80px; }
-  .grille { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .champ input::placeholder, .champ textarea::placeholder { color: #999; }
+  .champ textarea { resize: vertical; min-height: 100px; }
+  .grille { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
   
   /* --- Bouton d'action --- */
   .bouton {
     display: block;
     width: 100%;
-    margin-top: 40px;
-    background: #F9F8F6; /* Ivoire au repos */
+    margin-top: 60px;
+    background: #F9F8F6;
     color: #000;
     border: 1px solid #000;
-    padding: 16px;
+    padding: 18px;
     font-family: var(--f);
-    font-size: 10.5px;
+    font-size: 11px;
     font-weight: 500;
-    letter-spacing: .25em;
+    letter-spacing: .3em;
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;
@@ -160,9 +170,11 @@
 </head>
 <body>
 
-  <!-- En-tête du site, sans icônes, avec animation de ligne -->
+  <!-- En-tête raffiné avec vagues de luxe -->
   <header class="entete">
+    <div class="vague-gauche"></div>
     <span class="marque">RUBENS SAFFIANO</span>
+    <div class="vague-droite"></div>
   </header>
 
   <main class="conteneur" id="zone-formulaire">
@@ -231,5 +243,39 @@
 
       var element = document.createElement('div');
       element.className = 'pdf-rendu';
-      element.
+      element.innerHTML = `
+        <div class="pdf-entete">RUBENS SAFFIANO — FICHE ATELIER</div>
+        <div class="titre-section">01. INFORMATIONS PERSONNELLES</div>
+        <p style="margin-bottom:8px;"><strong>Nom et Prénom :</strong> ${nom}</p>
+        <p style="margin-bottom:8px;"><strong>Téléphone :</strong> ${tel}</p>
+        <p style="margin-bottom:20px;"><strong>Adresse :</strong> ${adresse}</p>
         
+        <div class="titre-section">02. CARACTÉRISTIQUES MORPHOLOGIQUES</div>
+        <p style="margin-bottom:8px;"><strong>Taille :</strong> ${taille !== "—" ? taille + " cm" : "—"}</p>
+        <p style="margin-bottom:8px;"><strong>Poids :</strong> ${poids !== "—" ? poids + " kg" : "—"}</p>
+        <p style="margin-bottom:8px;"><strong>Tour de poitrine :</strong> ${poitrine !== "—" ? poitrine + " cm" : "—"}</p>
+        <p style="margin-bottom:20px;"><strong>Tour d'épaule :</strong> ${epaule !== "—" ? epaule + " cm" : "—"}</p>
+        
+        <div class="titre-section">03. SÉLECTION DE QUALITÉ</div>
+        <p style="white-space: pre-wrap;">${qualite}</p>
+      `;
+
+      var opt = {
+        margin:       10,
+        filename:     'Fiche_Mesures_Rubens_Saffiano.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save().then(function(){
+        btn.innerText = "Transmettre à l'atelier";
+        var msg = "Bonjour Rubens Saffiano,\nJe viens de télécharger ma fiche de mesures en PDF. Je vous la joins à ce message 📎.";
+        var numWA = "33695772805";
+        window.open("https://wa.me/" + numWA + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
+      });
+    });
+  </script>
+
+</body>
+</html>
