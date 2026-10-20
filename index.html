@@ -5,11 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- SECURITÉ ANTI-RÉFÉRENCEMENT ABSOLUE -->
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>Fiche de prise de mesures - Rubens Saffiano</title>
+<title>Rubens Saffiano</title>
 <meta name="theme-color" content="#F9F8F6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Script de génération PDF local -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
   :root { --f: 'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif; }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-weight: normal; }
@@ -23,7 +25,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
   
-  /* --- En-tête copié de votre site officiel --- */
+  /* --- En-tête officiel --- */
   header.entete {
     height: 52px;
     display: flex;
@@ -51,7 +53,7 @@
   .icone-btn { width: 18px; height: 52px; display: flex; align-items: center; justify-content: center; background: none; border: 0; color: #000; }
   svg.ic { width: 18px; height: 18px; stroke-width: 1.5px; stroke: #000; fill: none; }
 
-  /* --- Mise en page du formulaire --- */
+  /* --- Formulaire & zones à imprimer --- */
   .conteneur { max-width: 600px; margin: 0 auto; padding: 40px 24px 80px; }
   
   .titre-section {
@@ -84,7 +86,7 @@
   .champ textarea { resize: vertical; min-height: 80px; }
   .grille { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   
-  /* --- Bouton --- */
+  /* --- Bouton d'action --- */
   .bouton {
     display: block;
     width: 100%;
@@ -103,11 +105,29 @@
     transition: background 0.3s, color 0.3s;
   }
   .bouton:hover { background: #000; color: #fff; }
+
+  /* Style du document PDF généré */
+  .pdf-rendu {
+    background-color: #F9F8F6;
+    padding: 40px;
+    font-family: var(--f);
+    color: #000;
+  }
+  .pdf-entete {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eae6e0;
+    padding-bottom: 15px;
+  }
 </style>
 </head>
 <body>
 
-  <!-- En-tête -->
+  <!-- En-tête du site -->
   <header class="entete">
     <div class="bloc-g">
       <button class="icone-btn" type="button"><svg class="ic" viewBox="0 0 24 24"><line x1="2" y1="6" x2="22" y2="6"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="18" x2="22" y2="18"/></svg></button>
@@ -120,7 +140,7 @@
     </div>
   </header>
 
-  <main class="conteneur">
+  <main class="conteneur" id="zone-formulaire">
     
     <!-- Section 1 -->
     <div class="titre-section">01. Informations Personnelles</div>
@@ -157,32 +177,61 @@
       <textarea id="qualite" placeholder="Précisez votre sélection..."></textarea>
     </div>
 
-    <!-- Validation -->
     <button type="button" class="bouton" id="envoyer">Transmettre à l'atelier</button>
 
   </main>
 
   <script>
     document.getElementById("envoyer").addEventListener("click", function(){
-      function v(id){ return document.getElementById(id).value.trim() || "—"; }
+      var btn = this;
+      btn.innerText = "Génération du PDF...";
 
-      var msg =
-        "Bonjour Rubens Saffiano,\n" +
-        "Je vous transmets ma fiche de prise de mesures.\n\n" +
-        "— INFORMATIONS —\n" +
-        "Nom et Prénom : " + v("nom") + "\n" +
-        "Téléphone : " + v("tel") + "\n" +
-        "Adresse : " + v("adresse") + "\n\n" +
-        "— MESURES —\n" +
-        "Taille : " + (v("taille") !== "—" ? v("taille") + " cm" : "—") + "\n" +
-        "Poids : " + (v("poids") !== "—" ? v("poids") + " kg" : "—") + "\n" +
-        "Tour de poitrine : " + (v("poitrine") !== "—" ? v("poitrine") + " cm" : "—") + "\n" +
-        "Tour d'épaule : " + (v("epaule") !== "—" ? v("epaule") + " cm" : "—") + "\n\n" +
-        "— SÉLECTION DE QUALITÉ —\n" +
-        v("qualite");
+      // Préparation du dossier temporaire pour le PDF
+      var nom = document.getElementById("nom").value.trim() || "Client";
+      var tel = document.getElementById("tel").value.trim() || "—";
+      var adresse = document.getElementById("adresse").value.trim() || "—";
+      var taille = document.getElementById("taille").value.trim() || "—";
+      var poids = document.getElementById("poids").value.trim() || "—";
+      var poitrine = document.getElementById("poitrine").value.trim() || "—";
+      var epaule = document.getElementById("epaule").value.trim() || "—";
+      var qualite = document.getElementById("qualite").value.trim() || "—";
 
-      var numWA = "33695772805";
-      window.open("https://wa.me/" + numWA + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
+      var element = document.createElement('div');
+      element.className = 'pdf-rendu';
+      element.innerHTML = `
+        <div class="pdf-entete">RUBENS SAFFIANO — FICHE ATELIER</div>
+        <div class="titre-section">01. INFORMATIONS PERSONNELLES</div>
+        <p style="margin-bottom:8px;"><strong>Nom et Prénom :</strong> ${nom}</p>
+        <p style="margin-bottom:8px;"><strong>Téléphone :</strong> ${tel}</p>
+        <p style="margin-bottom:20px;"><strong>Adresse :</strong> ${adresse}</p>
+        
+        <div class="titre-section">02. CARACTÉRISTIQUES MORPHOLOGIQUES</div>
+        <p style="margin-bottom:8px;"><strong>Taille :</strong> ${taille !== "—" ? taille + " cm" : "—"}</p>
+        <p style="margin-bottom:8px;"><strong>Poids :</strong> ${poids !== "—" ? poids + " kg" : "—"}</p>
+        <p style="margin-bottom:8px;"><strong>Tour de poitrine :</strong> ${poitrine !== "—" ? poitrine + " cm" : "—"}</p>
+        <p style="margin-bottom:20px;"><strong>Tour d'épaule :</strong> ${epaule !== "—" ? epaule + " cm" : "—"}</p>
+        
+        <div class="titre-section">03. SÉLECTION DE QUALITÉ</div>
+        <p style="white-space: pre-wrap;">${qualite}</p>
+      `;
+
+      var opt = {
+        margin:       10,
+        filename:     'Fiche_Mesures_Rubens_Saffiano.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      // Génération et téléchargement local du PDF
+      html2pdf().set(opt).from(element).save().then(function(){
+        btn.innerText = "Transmettre à l'atelier";
+        
+        // Redirection WhatsApp
+        var msg = "Bonjour Rubens Saffiano,\nJe viens de télécharger ma fiche de mesures en PDF. Je vous la joins à ce message 📎.";
+        var numWA = "33695772805";
+        window.open("https://wa.me/" + numWA + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
+      });
     });
   </script>
 
