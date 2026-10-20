@@ -27,8 +27,10 @@
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* On s'assure que le body ne prend pas plus de place que nécessaire */
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
-    min-height: 100dvh; /* Gère parfaitement la hauteur sur mobile */
   }
   
   /* --- En-tête épuré & Vagues de luxe animées --- */
@@ -82,56 +84,57 @@
   @keyframes expandLine { to { width: 100%; } }
   @keyframes fadeIn { to { opacity: 1; } }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(15px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   .anim {
     opacity: 0;
-    animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .d-1 { animation-delay: 0.1s; }
   .d-2 { animation-delay: 0.2s; }
   .d-3 { animation-delay: 0.3s; }
   .d-4 { animation-delay: 0.4s; }
 
-  /* --- Conteneur aéré et naturel --- */
+  /* --- Conteneur compact --- */
   .conteneur {
     max-width: 600px;
     margin: 0 auto;
     width: 100%;
-    padding: 32px 24px 64px; /* Grandes marges pour laisser respirer */
+    padding: 16px 20px 24px; /* Réduction drastique des marges externes */
+    flex: 1;
   }
   
-  /* --- Titres de section bien détachés --- */
+  /* --- Titres de section plus proches --- */
   .titre-section {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
     letter-spacing: .18em;
     text-transform: uppercase;
-    margin: 52px 0 28px 0; /* Augmentation des marges haut/bas */
+    margin: 24px 0 8px 0; /* Marges réduites (24px en haut, 8px en bas) */
     border-bottom: 1px solid #e3ded5;
-    padding-bottom: 12px;
+    padding-bottom: 4px;
     color: var(--texte);
   }
-  .titre-section:first-child { margin-top: 8px; }
+  .titre-section:first-child { margin-top: 0; }
   
-  /* --- Champs généreux et aérés --- */
+  /* --- Champs très fins --- */
   .champ { 
-    margin-bottom: 32px; /* Grand espace entre chaque champ */
+    margin-bottom: 14px; /* Grand espace réduit à 14px entre chaque champ */
     position: relative; 
   }
   
   .champ input, .champ textarea {
     width: 100%;
     font-family: var(--f);
-    font-size: 15px; /* Légèrement plus grand pour le confort mobile */
+    font-size: 13.5px;
     font-weight: 300;
     color: var(--texte);
     border: 0;
     border-bottom: 1px solid var(--ligne);
     background: transparent;
-    padding: 12px 0 16px 0; /* Plus d'espace sous le texte */
+    padding: 10px 0 6px 0; /* Padding vertical réduit */
     outline: none;
     border-radius: 0;
     appearance: none;
@@ -143,44 +146,35 @@
   }
   
   .champ input::placeholder, .champ textarea::placeholder { 
-    color: #999; 
-    font-weight: 300;
+    color: #888; 
+    font-size: 13.5px;
   }
 
-  /* --- Zone de texte (Textarea) transformée en bloc défini --- */
-  .champ-zone { margin-bottom: 32px; }
-  .champ-zone textarea {
-    border: 1px solid var(--ligne); /* Ajout d'une bordure complète */
-    background: rgba(255, 255, 255, 0.4);
-    padding: 16px;
-    min-height: 130px;
-    resize: vertical;
-    transition: border-color 0.3s ease, background 0.3s ease;
-  }
-  .champ-zone textarea:focus {
-    border-color: var(--texte);
-    background: rgba(255, 255, 255, 0.8);
+  /* --- Retour à une zone de texte simple (sans case) --- */
+  .champ textarea { 
+    min-height: 54px; /* Juste assez pour 2 lignes */
+    resize: none; /* Empêche l'utilisateur de casser la mise en page */
   }
 
-  /* --- Grille pour les mesures --- */
+  /* --- Grille --- */
   .grille { 
     display: grid; 
     grid-template-columns: 1fr 1fr; 
-    column-gap: 24px; /* Écart entre les colonnes */
-    row-gap: 0; /* Le margin-bottom des champs gère l'espace vertical */
+    column-gap: 20px; 
+    row-gap: 0; 
   }
   
-  /* --- Bouton d'action majestueux --- */
+  /* --- Bouton bien proportionné --- */
   .bouton {
     display: block;
     width: 100%;
-    margin-top: 64px; /* Détache fortement le bouton du formulaire */
+    margin-top: 28px; /* Marge réduite pour remonter le bouton */
     background: var(--texte);
     color: var(--fond);
     border: 1px solid var(--texte);
-    padding: 20px 16px; /* Bouton plus massif donc plus luxueux */
+    padding: 14px;
     font-family: var(--f);
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 500;
     letter-spacing: .25em;
     text-transform: uppercase;
@@ -188,10 +182,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
   }
-  .bouton:hover { 
-    background: transparent; 
-    color: var(--texte); 
-  }
+  .bouton:hover { background: transparent; color: var(--texte); }
 
   /* --- PDF Style --- */
   .pdf-rendu {
@@ -206,16 +197,9 @@
     font-weight: 600;
     letter-spacing: .2em;
     text-transform: uppercase;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     border-bottom: 1px solid #e3ded5;
-    padding-bottom: 20px;
-  }
-
-  /* --- Adaptation mobile (petits écrans) --- */
-  @media (max-width: 380px) {
-    .grille { grid-template-columns: 1fr; } /* On passe sur une seule colonne si l'écran est très étroit */
-    .conteneur { padding: 24px 20px 48px; }
-    .titre-section { margin: 40px 0 20px 0; }
+    padding-bottom: 15px;
   }
 </style>
 </head>
@@ -265,8 +249,8 @@
     <!-- Section 3 -->
     <div class="anim d-3">
       <div class="titre-section">03. Sélection de Qualité</div>
-      <div class="champ-zone">
-        <textarea id="qualite" placeholder="Précisez votre sélection, vos envies, vos finitions..."></textarea>
+      <div class="champ">
+        <textarea id="qualite" placeholder="Précisez votre sélection..." rows="2"></textarea>
       </div>
     </div>
 
@@ -297,18 +281,18 @@
         <div class="pdf-entete">RUBENS SAFFIANO — FICHE ATELIER</div>
         
         <div class="titre-section" style="margin-top: 0;">01. INFORMATIONS PERSONNELLES</div>
-        <p style="margin-bottom:12px; font-size: 14px;"><strong>Nom et Prénom :</strong> ${nom}</p>
-        <p style="margin-bottom:12px; font-size: 14px;"><strong>Téléphone :</strong> ${tel}</p>
-        <p style="margin-bottom:30px; font-size: 14px;"><strong>Adresse :</strong> ${adresse}</p>
+        <p style="margin-bottom:8px; font-size: 14px;"><strong>Nom et Prénom :</strong> ${nom}</p>
+        <p style="margin-bottom:8px; font-size: 14px;"><strong>Téléphone :</strong> ${tel}</p>
+        <p style="margin-bottom:24px; font-size: 14px;"><strong>Adresse :</strong> ${adresse}</p>
         
         <div class="titre-section">02. CARACTÉRISTIQUES MORPHOLOGIQUES</div>
-        <p style="margin-bottom:12px; font-size: 14px;"><strong>Taille :</strong> ${taille !== "—" ? taille + " cm" : "—"}</p>
-        <p style="margin-bottom:12px; font-size: 14px;"><strong>Poids :</strong> ${poids !== "—" ? poids + " kg" : "—"}</p>
-        <p style="margin-bottom:12px; font-size: 14px;"><strong>Tour de poitrine :</strong> ${poitrine !== "—" ? poitrine + " cm" : "—"}</p>
-        <p style="margin-bottom:30px; font-size: 14px;"><strong>Tour d'épaule :</strong> ${epaule !== "—" ? epaule + " cm" : "—"}</p>
+        <p style="margin-bottom:8px; font-size: 14px;"><strong>Taille :</strong> ${taille !== "—" ? taille + " cm" : "—"}</p>
+        <p style="margin-bottom:8px; font-size: 14px;"><strong>Poids :</strong> ${poids !== "—" ? poids + " kg" : "—"}</p>
+        <p style="margin-bottom:8px; font-size: 14px;"><strong>Tour de poitrine :</strong> ${poitrine !== "—" ? poitrine + " cm" : "—"}</p>
+        <p style="margin-bottom:24px; font-size: 14px;"><strong>Tour d'épaule :</strong> ${epaule !== "—" ? epaule + " cm" : "—"}</p>
         
         <div class="titre-section">03. SÉLECTION DE QUALITÉ</div>
-        <p style="white-space: pre-wrap; font-size: 14px; line-height: 1.6;">${qualite}</p>
+        <p style="white-space: pre-wrap; font-size: 14px; line-height: 1.5;">${qualite}</p>
       `;
 
       var opt = {
