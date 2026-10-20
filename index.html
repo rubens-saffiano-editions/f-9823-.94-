@@ -3,63 +3,64 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- SECURITÉ ANTI-RÉFÉRENCEMENT ABSOLUE -->
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <title>Facture & Fiche Atelier — Rubens Saffiano</title>
-<meta name="description" content="Votre espace sécurisé de validation de commande.">
 <meta name="theme-color" content="#F7F5F0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<!-- Script de génération PDF local -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
-  :root { --f: 'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  :root { 
+    --f: 'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+    --fond: #F7F5F0;
+    --texte: #111;
+    --ligne: #d4cec4;
+  }
+  
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-weight: normal; }
   
   html, body {
-    background-color: #F7F5F0;
-    color: #111;
+    background-color: var(--fond);
+    color: var(--texte);
     font-family: var(--f);
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    min-height: 100dvh; /* Gère parfaitement la hauteur sur mobile */
   }
   
   /* --- En-tête épuré & Vagues de luxe animées --- */
   header.entete {
-    height: 54px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: sticky;
     top: 0;
-    background-color: #F7F5F0;
+    background-color: var(--fond);
     z-index: 1000;
     padding: 0 20px;
     overflow: hidden;
-    flex-shrink: 0;
   }
   
   .vague-gauche, .vague-droite {
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, transparent, #d4cec4);
+    background: linear-gradient(90deg, transparent, var(--ligne));
     opacity: 0;
     animation: fadeIn 1.5s ease 0.5s forwards;
   }
   .vague-gauche { margin-right: 15px; }
-  .vague-droite { background: linear-gradient(90deg, #d4cec4, transparent); margin-left: 15px; }
+  .vague-droite { background: linear-gradient(90deg, var(--ligne), transparent); margin-left: 15px; }
 
   header.entete .marque {
     font-size: 12px;
     font-weight: 600;
     letter-spacing: .2em;
     text-transform: uppercase;
-    color: #111;
+    color: var(--texte);
     opacity: 0;
     animation: fadeIn 1.5s ease 0.3s forwards;
     white-space: nowrap;
@@ -81,76 +82,103 @@
   @keyframes expandLine { to { width: 100%; } }
   @keyframes fadeIn { to { opacity: 1; } }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   .anim {
     opacity: 0;
-    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .d-1 { animation-delay: 0.1s; }
   .d-2 { animation-delay: 0.2s; }
   .d-3 { animation-delay: 0.3s; }
   .d-4 { animation-delay: 0.4s; }
 
-  /* --- Conteneur principal qui occupe tout l'espace et répartit le vide proprement --- */
+  /* --- Conteneur aéré et naturel --- */
   .conteneur {
-    flex: 1;
     max-width: 600px;
-    width: 100%;
     margin: 0 auto;
-    padding: 24px 20px 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    width: 100%;
+    padding: 32px 24px 64px; /* Grandes marges pour laisser respirer */
   }
   
+  /* --- Titres de section bien détachés --- */
   .titre-section {
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 600;
-    letter-spacing: .16em;
+    letter-spacing: .18em;
     text-transform: uppercase;
-    margin: 18px 0 10px 0;
+    margin: 52px 0 28px 0; /* Augmentation des marges haut/bas */
     border-bottom: 1px solid #e3ded5;
-    padding-bottom: 6px;
-    color: #222;
+    padding-bottom: 12px;
+    color: var(--texte);
   }
-  .titre-section:first-child { margin-top: 0; }
+  .titre-section:first-child { margin-top: 8px; }
   
-  .champ { margin-bottom: 14px; position: relative; }
+  /* --- Champs généreux et aérés --- */
+  .champ { 
+    margin-bottom: 32px; /* Grand espace entre chaque champ */
+    position: relative; 
+  }
+  
   .champ input, .champ textarea {
     width: 100%;
     font-family: var(--f);
-    font-size: 14.5px;
+    font-size: 15px; /* Légèrement plus grand pour le confort mobile */
     font-weight: 300;
-    color: #111;
+    color: var(--texte);
     border: 0;
-    border-bottom: 1px solid #d4cec4;
+    border-bottom: 1px solid var(--ligne);
     background: transparent;
-    padding: 13px 0;
+    padding: 12px 0 16px 0; /* Plus d'espace sous le texte */
     outline: none;
     border-radius: 0;
     appearance: none;
     transition: border-color 0.3s ease;
   }
-  .champ input:focus, .champ textarea:focus {
-    border-bottom: 1px solid #111;
-  }
-  .champ input::placeholder, .champ textarea::placeholder { color: #888; }
-  /* On agrandit un tout petit peu la zone de texte pour qu'elle respire mieux */
-  .champ textarea { resize: vertical; min-height: 95px; }
-  .grille { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
   
-  /* --- Bouton d'action parfaitement intégré --- */
+  .champ input:focus, .champ textarea:focus {
+    border-bottom: 1px solid var(--texte);
+  }
+  
+  .champ input::placeholder, .champ textarea::placeholder { 
+    color: #999; 
+    font-weight: 300;
+  }
+
+  /* --- Zone de texte (Textarea) transformée en bloc défini --- */
+  .champ-zone { margin-bottom: 32px; }
+  .champ-zone textarea {
+    border: 1px solid var(--ligne); /* Ajout d'une bordure complète */
+    background: rgba(255, 255, 255, 0.4);
+    padding: 16px;
+    min-height: 130px;
+    resize: vertical;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  .champ-zone textarea:focus {
+    border-color: var(--texte);
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  /* --- Grille pour les mesures --- */
+  .grille { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    column-gap: 24px; /* Écart entre les colonnes */
+    row-gap: 0; /* Le margin-bottom des champs gère l'espace vertical */
+  }
+  
+  /* --- Bouton d'action majestueux --- */
   .bouton {
     display: block;
     width: 100%;
-    margin-top: 15px;
-    background: #F7F5F0;
-    color: #111;
-    border: 1px solid #111;
-    padding: 16px;
+    margin-top: 64px; /* Détache fortement le bouton du formulaire */
+    background: var(--texte);
+    color: var(--fond);
+    border: 1px solid var(--texte);
+    padding: 20px 16px; /* Bouton plus massif donc plus luxueux */
     font-family: var(--f);
     font-size: 11px;
     font-weight: 500;
@@ -158,11 +186,14 @@
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    transition: all 0.3s ease;
   }
-  .bouton:hover { background: #111; color: #F7F5F0; }
+  .bouton:hover { 
+    background: transparent; 
+    color: var(--texte); 
+  }
 
-  /* Style du document PDF généré */
+  /* --- PDF Style --- */
   .pdf-rendu {
     background-color: #F7F5F0;
     padding: 40px;
@@ -175,15 +206,21 @@
     font-weight: 600;
     letter-spacing: .2em;
     text-transform: uppercase;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     border-bottom: 1px solid #e3ded5;
-    padding-bottom: 15px;
+    padding-bottom: 20px;
+  }
+
+  /* --- Adaptation mobile (petits écrans) --- */
+  @media (max-width: 380px) {
+    .grille { grid-template-columns: 1fr; } /* On passe sur une seule colonne si l'écran est très étroit */
+    .conteneur { padding: 24px 20px 48px; }
+    .titre-section { margin: 40px 0 20px 0; }
   }
 </style>
 </head>
 <body>
 
-  <!-- En-tête raffiné avec vagues de luxe -->
   <header class="entete">
     <div class="vague-gauche"></div>
     <span class="marque">RUBENS SAFFIANO</span>
@@ -192,46 +229,44 @@
 
   <main class="conteneur" id="zone-formulaire">
     
-    <div>
-      <!-- Section 1 -->
-      <div class="anim d-1">
-        <div class="titre-section">01. Informations Personnelles</div>
+    <!-- Section 1 -->
+    <div class="anim d-1">
+      <div class="titre-section">01. Informations Personnelles</div>
+      <div class="champ">
+        <input type="text" id="nom" placeholder="Nom et Prénom" autocomplete="name">
+      </div>
+      <div class="champ">
+        <input type="tel" id="tel" placeholder="Numéro de téléphone" autocomplete="tel">
+      </div>
+      <div class="champ">
+        <input type="text" id="adresse" placeholder="Adresse complète de livraison" autocomplete="street-address">
+      </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="anim d-2">
+      <div class="titre-section">02. Caractéristiques Morphologiques</div>
+      <div class="grille">
         <div class="champ">
-          <input type="text" id="nom" placeholder="Nom et Prénom" autocomplete="name">
+          <input type="number" id="taille" placeholder="Taille (cm)">
         </div>
         <div class="champ">
-          <input type="tel" id="tel" placeholder="Numéro de téléphone" autocomplete="tel">
+          <input type="number" id="poids" placeholder="Poids (kg)">
         </div>
         <div class="champ">
-          <input type="text" id="adresse" placeholder="Adresse complète de livraison" autocomplete="street-address">
+          <input type="number" id="poitrine" placeholder="Tour de poitrine (cm)">
+        </div>
+        <div class="champ">
+          <input type="number" id="epaule" placeholder="Tour d'épaule (cm)">
         </div>
       </div>
+    </div>
 
-      <!-- Section 2 -->
-      <div class="anim d-2">
-        <div class="titre-section">02. Caractéristiques Morphologiques</div>
-        <div class="grille">
-          <div class="champ">
-            <input type="number" id="taille" placeholder="Taille (cm)">
-          </div>
-          <div class="champ">
-            <input type="number" id="poids" placeholder="Poids (kg)">
-          </div>
-          <div class="champ">
-            <input type="number" id="poitrine" placeholder="Tour de poitrine (cm)">
-          </div>
-          <div class="champ">
-            <input type="number" id="epaule" placeholder="Tour d'épaule (cm)">
-          </div>
-        </div>
-      </div>
-
-      <!-- Section 3 -->
-      <div class="anim d-3">
-        <div class="titre-section">03. Sélection de Qualité</div>
-        <div class="champ">
-          <textarea id="qualite" placeholder="Précisez votre sélection..."></textarea>
-        </div>
+    <!-- Section 3 -->
+    <div class="anim d-3">
+      <div class="titre-section">03. Sélection de Qualité</div>
+      <div class="champ-zone">
+        <textarea id="qualite" placeholder="Précisez votre sélection, vos envies, vos finitions..."></textarea>
       </div>
     </div>
 
@@ -260,23 +295,24 @@
       element.className = 'pdf-rendu';
       element.innerHTML = `
         <div class="pdf-entete">RUBENS SAFFIANO — FICHE ATELIER</div>
-        <div class="titre-section">01. INFORMATIONS PERSONNELLES</div>
-        <p style="margin-bottom:8px;"><strong>Nom et Prénom :</strong> ${nom}</p>
-        <p style="margin-bottom:8px;"><strong>Téléphone :</strong> ${tel}</p>
-        <p style="margin-bottom:20px;"><strong>Adresse :</strong> ${adresse}</p>
+        
+        <div class="titre-section" style="margin-top: 0;">01. INFORMATIONS PERSONNELLES</div>
+        <p style="margin-bottom:12px; font-size: 14px;"><strong>Nom et Prénom :</strong> ${nom}</p>
+        <p style="margin-bottom:12px; font-size: 14px;"><strong>Téléphone :</strong> ${tel}</p>
+        <p style="margin-bottom:30px; font-size: 14px;"><strong>Adresse :</strong> ${adresse}</p>
         
         <div class="titre-section">02. CARACTÉRISTIQUES MORPHOLOGIQUES</div>
-        <p style="margin-bottom:8px;"><strong>Taille :</strong> ${taille !== "—" ? taille + " cm" : "—"}</p>
-        <p style="margin-bottom:8px;"><strong>Poids :</strong> ${poids !== "—" ? poids + " kg" : "—"}</p>
-        <p style="margin-bottom:8px;"><strong>Tour de poitrine :</strong> ${poitrine !== "—" ? poitrine + " cm" : "—"}</p>
-        <p style="margin-bottom:20px;"><strong>Tour d'épaule :</strong> ${epaule !== "—" ? epaule + " cm" : "—"}</p>
+        <p style="margin-bottom:12px; font-size: 14px;"><strong>Taille :</strong> ${taille !== "—" ? taille + " cm" : "—"}</p>
+        <p style="margin-bottom:12px; font-size: 14px;"><strong>Poids :</strong> ${poids !== "—" ? poids + " kg" : "—"}</p>
+        <p style="margin-bottom:12px; font-size: 14px;"><strong>Tour de poitrine :</strong> ${poitrine !== "—" ? poitrine + " cm" : "—"}</p>
+        <p style="margin-bottom:30px; font-size: 14px;"><strong>Tour d'épaule :</strong> ${epaule !== "—" ? epaule + " cm" : "—"}</p>
         
         <div class="titre-section">03. SÉLECTION DE QUALITÉ</div>
-        <p style="white-space: pre-wrap;">${qualite}</p>
+        <p style="white-space: pre-wrap; font-size: 14px; line-height: 1.6;">${qualite}</p>
       `;
 
       var opt = {
-        margin:       10,
+        margin:       15,
         filename:     'Fiche_Mesures_Rubens_Saffiano.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2 },
