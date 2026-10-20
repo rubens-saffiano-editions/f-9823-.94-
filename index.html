@@ -4,12 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<title>Facture & Fiche Atelier — Rubens Saffiano</title>
+<title>Fiche Atelier — Rubens Saffiano</title>
 <meta name="theme-color" content="#F7F5F0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
   :root { 
     --f: 'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif; 
@@ -122,7 +121,7 @@
   }
   .titre-section:first-child { margin-top: 8px; }
   
-  /* --- Champs et Zone de texte (Unifiés) --- */
+  /* --- Champs et Zone de texte --- */
   .champ, .champ-zone { 
     margin-bottom: 16px; 
     position: relative; 
@@ -132,9 +131,9 @@
   .champ textarea,
   .champ-zone textarea {
     width: 100%;
-    font-family: var(--f) !important; /* Force la police */
-    font-size: 15px !important;      /* Force la taille */
-    font-weight: 300 !important;     /* Force la graisse fine */
+    font-family: var(--f) !important;
+    font-size: 15px !important;
+    font-weight: 300 !important;
     color: var(--texte) !important;
     border: 0;
     border-bottom: 1px solid var(--ligne);
@@ -161,7 +160,7 @@
     font-weight: 300 !important;
   }
 
-  /* --- ZONE DE TEXTE : Intégration parfaite --- */
+  /* --- ZONE DE TEXTE --- */
   .section-qualite {
     flex: 1; 
     display: flex;
@@ -178,7 +177,6 @@
 
   .champ-zone textarea { 
     flex: 1; 
-    /* Suppression des styles natifs du navigateur mobile */
     border: none !important;
     border-bottom: 1px solid var(--ligne) !important; 
     background: transparent !important; 
@@ -208,7 +206,10 @@
   }
 
   .bouton {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     width: 100%;
     background: var(--texte);
     color: var(--fond);
@@ -219,29 +220,11 @@
     font-weight: 500;
     letter-spacing: .25em;
     text-transform: uppercase;
-    text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
   }
   .bouton:hover { background: transparent; color: var(--texte); }
-
-  /* --- PDF Style --- */
-  .pdf-rendu {
-    background-color: #F7F5F0;
-    padding: 40px;
-    font-family: var(--f);
-    color: #111;
-  }
-  .pdf-entete {
-    text-align: center;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #e3ded5;
-    padding-bottom: 15px;
-  }
+  .bouton svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 </style>
 </head>
 <body>
@@ -295,61 +278,54 @@
       </div>
     </div>
 
-    <!-- Bouton -->
+    <!-- Bouton WhatsApp -->
     <div class="anim d-4 bouton-wrapper">
-      <button type="button" class="bouton" id="envoyer">Transmettre à l'atelier</button>
+      <button type="button" class="bouton" id="envoyer">
+        <svg viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 0 0-7.6 13.2L3.3 20.7l4.4-1.1A8.8 8.8 0 1 0 12 3.2Z"/><path d="M8.9 8.3c.2-.5.6-.6 1-.6l.6 1.6-.7.9c.6 1.4 1.7 2.5 3.1 3.1l.9-.7 1.6.6c0 .4-.1.8-.6 1-2.9.8-6.6-2.9-5.9-5.9Z"/></svg>
+        Transmettre à l'atelier
+      </button>
     </div>
 
   </main>
 
   <script>
     document.getElementById("envoyer").addEventListener("click", function(){
-      var btn = this;
-      btn.innerText = "Génération du PDF...";
+      // Récupération des valeurs (ou "—" si vide)
+      var nom = document.getElementById("nom").value.trim() || "Non renseigné";
+      var tel = document.getElementById("tel").value.trim() || "Non renseigné";
+      var adresse = document.getElementById("adresse").value.trim() || "Non renseignée";
+      
+      var taille = document.getElementById("taille").value.trim() ? document.getElementById("taille").value.trim() + " cm" : "—";
+      var poids = document.getElementById("poids").value.trim() ? document.getElementById("poids").value.trim() + " kg" : "—";
+      var poitrine = document.getElementById("poitrine").value.trim() ? document.getElementById("poitrine").value.trim() + " cm" : "—";
+      var epaule = document.getElementById("epaule").value.trim() ? document.getElementById("epaule").value.trim() + " cm" : "—";
+      
+      var qualite = document.getElementById("qualite").value.trim() || "Aucune précision.";
 
-      var nom = document.getElementById("nom").value.trim() || "Client";
-      var tel = document.getElementById("tel").value.trim() || "—";
-      var adresse = document.getElementById("adresse").value.trim() || "—";
-      var taille = document.getElementById("taille").value.trim() || "—";
-      var poids = document.getElementById("poids").value.trim() || "—";
-      var poitrine = document.getElementById("poitrine").value.trim() || "—";
-      var epaule = document.getElementById("epaule").value.trim() || "—";
-      var qualite = document.getElementById("qualite").value.trim() || "—";
+      // Création du message parfaitement formaté pour WhatsApp
+      // Les astérisques (*) créent du gras dans WhatsApp
+      var message = 
+        "*FICHE ATELIER — RUBENS SAFFIANO*\n\n" +
+        "*01. INFORMATIONS PERSONNELLES*\n" +
+        "• *Nom :* " + nom + "\n" +
+        "• *Téléphone :* " + tel + "\n" +
+        "• *Adresse :* " + adresse + "\n\n" +
+        "*02. MESURES*\n" +
+        "• Taille : " + taille + "\n" +
+        "• Poids : " + poids + "\n" +
+        "• Poitrine : " + poitrine + "\n" +
+        "• Épaules : " + epaule + "\n\n" +
+        "*03. SÉLECTION & FINITIONS*\n" +
+        qualite + "\n\n" +
+        "----------------------------------\n" +
+        "_Message généré depuis le formulaire client._";
 
-      var element = document.createElement('div');
-      element.className = 'pdf-rendu';
-      element.innerHTML = `
-        <div class="pdf-entete">RUBENS SAFFIANO — FICHE ATELIER</div>
-        
-        <div class="titre-section" style="margin-top: 0;">01. INFORMATIONS PERSONNELLES</div>
-        <p style="margin-bottom:8px; font-size: 14px;"><strong>Nom et Prénom :</strong> ${nom}</p>
-        <p style="margin-bottom:8px; font-size: 14px;"><strong>Téléphone :</strong> ${tel}</p>
-        <p style="margin-bottom:24px; font-size: 14px;"><strong>Adresse :</strong> ${adresse}</p>
-        
-        <div class="titre-section">02. CARACTÉRISTIQUES MORPHOLOGIQUES</div>
-        <p style="margin-bottom:8px; font-size: 14px;"><strong>Taille :</strong> ${taille !== "—" ? taille + " cm" : "—"}</p>
-        <p style="margin-bottom:8px; font-size: 14px;"><strong>Poids :</strong> ${poids !== "—" ? poids + " kg" : "—"}</p>
-        <p style="margin-bottom:8px; font-size: 14px;"><strong>Tour de poitrine :</strong> ${poitrine !== "—" ? poitrine + " cm" : "—"}</p>
-        <p style="margin-bottom:24px; font-size: 14px;"><strong>Tour d'épaule :</strong> ${epaule !== "—" ? epaule + " cm" : "—"}</p>
-        
-        <div class="titre-section">03. SÉLECTION DE QUALITÉ</div>
-        <p style="white-space: pre-wrap; font-size: 14px; line-height: 1.5;">${qualite}</p>
-      `;
-
-      var opt = {
-        margin:       15,
-        filename:     'Fiche_Mesures_Rubens_Saffiano.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-
-      html2pdf().set(opt).from(element).save().then(function(){
-        btn.innerText = "Transmettre à l'atelier";
-        var msg = "Bonjour Rubens Saffiano,\nJe viens de télécharger ma fiche de mesures en PDF. Je vous la joins à ce message 📎.";
-        var numWA = "33695772805";
-        window.open("https://wa.me/" + numWA + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
-      });
+      // Numéro WhatsApp de l'atelier (votre numéro)
+      var numWA = "33695772805"; 
+      
+      // Ouverture de WhatsApp avec le message pré-rempli
+      var url = "https://wa.me/" + numWA + "?text=" + encodeURIComponent(message);
+      window.open(url, "_blank", "noopener");
     });
   </script>
 
